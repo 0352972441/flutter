@@ -39,7 +39,7 @@ class Chart extends StatelessWidget {
           children: createCharTransacion.map((data){             
               return Flexible(
                 fit: FlexFit.tight,
-                flex: 2,
+                //flex: 2,
                 child: CharBar(data['day'], data['amount'], data['amount'] == 0.0 ? 0.0: (data['amount'] as double)/ spendingTotalAmount ),
               );
           }).toList()         

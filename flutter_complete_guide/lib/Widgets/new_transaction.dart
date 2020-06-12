@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 //
 
 class NewStransaction extends StatefulWidget{
@@ -12,8 +13,9 @@ class NewStransaction extends StatefulWidget{
 }
 
 class NewStransactionState extends State<NewStransaction> {
-  final titleControler = TextEditingController();
-  final amountControler = TextEditingController();
+  final _titleControler = TextEditingController();
+  final _amountControler = TextEditingController();
+  DateTime _timerPicker;
   final Function _addTransaction;
 /// newTransaction is widgetlessState
 /// [NewTransaction]Create Data for card input title and amount
@@ -21,16 +23,31 @@ class NewStransactionState extends State<NewStransaction> {
   NewStransactionState(this._addTransaction);
 
   void onSumitData(){
-    final enterText = titleControler.text;
-    final enterAmount = double.parse(amountControler.text);
-
-    if(enterAmount <= 0 || enterText.isEmpty){
+    if(_amountControler.text.isEmpty){
+      return;
+    }
+    final enterText = _titleControler.text;
+    final enterAmount = double.parse(_amountControler.text);
+    if(enterAmount <= 0 || enterText.isEmpty || _timerPicker == null){
       return;
     }
     _addTransaction(
-      enterText, enterAmount
+      enterText, enterAmount, _timerPicker
     );
     Navigator.of(context).pop();
+  }
+
+  void _showDatePicker(){
+    showDatePicker(
+      context: context, initialDate: DateTime.now(), firstDate: DateTime(2019), lastDate: DateTime.now()
+    ).then((DateTime datePicker){
+        if(datePicker == null){
+          return;
+        }
+        setState(() {
+           _timerPicker = datePicker;
+        });
+    });
   }
 
   @override
@@ -52,7 +69,7 @@ class NewStransactionState extends State<NewStransaction> {
                   labelStyle: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold, fontSize: 16),
                   labelText: 'Name',fillColor: Colors.red
                 ),
-                controller: titleControler,
+                controller: _titleControler,
                 onSubmitted: (_)=> onSumitData(),
                 //onChanged: (value) => titleInput = value
               ),
@@ -61,20 +78,24 @@ class NewStransactionState extends State<NewStransaction> {
                   labelStyle: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold, fontSize: 16),
                   labelText: 'Amount',
                 ),
-                controller: amountControler,
+                controller: _amountControler,
                 onSubmitted: (_)=> onSumitData(),
                 //onChanged: (value) => amountInput = value
               ),
 
               Row(
                 children: <Widget>[
-                  SizedBox(height: 30,),
-                  Text('Not choose data'),
-                  FlatButton(onPressed: null, child: Text(
+                  SizedBox(height: 70,),
+                  Expanded(
+                    child: Text( 
+                        _timerPicker == null ? 'Not choose data': 'Picker Date: ${DateFormat.yMMMd().format(_timerPicker)}', style: TextStyle(fontWeight: FontWeight.bold),
+                       ),
+                      ),
+                  FlatButton(onPressed: _showDatePicker, child: Text(
                     'Choose date',style: Theme.of(context).textTheme.button,
                   ),
                   textColor: Theme.of(context).textTheme.button.color,
-                  color: Theme.of(context).primaryColor,
+                  //color: Theme.of(context).primaryColor,
                   )
                 ],
               ),

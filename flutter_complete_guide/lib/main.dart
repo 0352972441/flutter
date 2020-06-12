@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget{
       theme: ThemeData(
         primarySwatch: Colors.green,
         accentColor: Colors.blue,
+        errorColor: Colors.red,
         fontFamily: "OpenSans",
         textTheme: ThemeData.light().textTheme.copyWith(title: TextStyle(fontFamily: 'Opensans',fontSize: 18, fontWeight: FontWeight.bold),
             button: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
@@ -55,10 +56,23 @@ class TransactionState extends State<MyHomePage>{
     }
 
 
-  void addTransaction(String title , double amount){
-    Transaction newTransaction = new Transaction(id: DateTime.now().toString(), title: title, amount: amount, date: DateTime.now());
+  void addTransaction(String title , double amount, DateTime chosenDate){
+    Transaction newTransaction = new Transaction(id: DateTime.now().toString(), title: title, amount: amount, date: chosenDate);
     setState(() {
       _transaction.add(newTransaction);
+    });
+  }
+ /*
+  void remoteTransaction(int index){
+    setState(() {
+      _transaction.removeAt(index);
+    });
+  }*/
+ 
+  void remoteTransaction(String id){
+    /// [removeWhere]  object equal ID 
+    setState(() {
+      _transaction.removeWhere((value)=> value.id == id);
     });
   }
 
@@ -86,7 +100,7 @@ class TransactionState extends State<MyHomePage>{
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Chart(createCharTransacion),
-              TransactionList(_transaction),
+              TransactionList(_transaction, remoteTransaction),
             ],
           ), 
         ),
