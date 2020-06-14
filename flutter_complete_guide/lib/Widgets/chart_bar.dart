@@ -10,17 +10,21 @@ class CharBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return LayoutBuilder(builder: (context, contrains){
+      return Column(
         children: <Widget>[
-          FittedBox(
+          Container(
+            height: contrains.maxHeight * 0.15,
+            child: FittedBox(
               child: Text(
               '\$${amount.toStringAsFixed(0)}',
               style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'OpenSans'),
             ),
           ),
-          SizedBox(height: 10,),
+          ),
+          SizedBox(height: contrains.maxHeight * 0.05,),
           Container(
-            height: 60,
+            height: contrains.maxHeight * 0.6,
             width: 10,
             child: Stack(
               children: <Widget>[
@@ -45,11 +49,19 @@ class CharBar extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10,),
-          Text(label,
+          SizedBox(height: contrains.maxHeight * 0.05,),
+          Container(
+            height: contrains.maxHeight * 0.15,
+            child: FittedBox(
+              child: Text(label,
               style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green, fontSize: 15),
+             ),
+            ),
           ),
         ],
+    );
+    }
+    
     );
   }
 }

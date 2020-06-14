@@ -10,20 +10,22 @@ class TransactionList extends StatelessWidget{
     @override
     Widget build(BuildContext context){
         return Container(
-          height: 300,
             //child:ListView(
-              child: transaction.isEmpty ? Column(
+              child: transaction.isEmpty ? LayoutBuilder(builder: (context, contraints){
+                return Column(
                 children: <Widget>[
                   Text('Not transaction add yet!', style: Theme.of(context).textTheme.title),
                   SizedBox(
-                    height: 20,
+                    height: contraints.maxHeight * 0.1,
                   ),
                   Container(
-                    height: 200,
+                    height: contraints.maxHeight * 0.7,
                     child: Image.asset('assets/images/waiting.png',fit: BoxFit.cover,),
                   )
-                ],
-              ) :ListView.builder(
+                ]
+                );
+              })
+              :ListView.builder(
                 itemCount: transaction.length,
                 itemBuilder: (context, index){
                    return Card(
@@ -40,7 +42,10 @@ class TransactionList extends StatelessWidget{
                             ),
                           title: Text(transaction[index].title, style: Theme.of(context).textTheme.title ),
                           subtitle: Text(DateFormat.yMMMd().format(transaction[index].date)),
-                          trailing: IconButton(icon: Icon(Icons.delete, 
+                          trailing: MediaQuery.of(context).size.width > 500 ? 
+                           FlatButton.icon(
+                             onPressed: ()=> _remoteTransaction(transaction[index].id), icon: Icon(Icons.delete, color: Colors.red,), label: Text('Delete')
+                             ):IconButton(icon: Icon(Icons.delete, 
                               color: Theme.of(context).errorColor,
                                ),
                                onPressed: ()=>_remoteTransaction(transaction[index].id),

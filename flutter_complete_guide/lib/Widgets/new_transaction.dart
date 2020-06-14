@@ -52,7 +52,8 @@ class NewStransactionState extends State<NewStransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return SingleChildScrollView(
+      child: Card(
         elevation: 10,
         child: Container(
           // decoration: BoxDecoration(
@@ -60,7 +61,8 @@ class NewStransactionState extends State<NewStransaction> {
           //   fit: BoxFit.cover)
           // ),
           color: Colors.lightBlue[50],
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.only(top: 10, left: 10, right: 10,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
@@ -112,6 +114,7 @@ class NewStransactionState extends State<NewStransaction> {
             ],
           ),
         ),
-      );
+      ),
+    );
   }
 }
