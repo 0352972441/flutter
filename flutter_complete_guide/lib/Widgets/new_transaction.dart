@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/Widgets/adapter_flat_button.dart';
 import 'package:intl/intl.dart';
 //
 
 class NewStransaction extends StatefulWidget{
   final Function _addTransaction;
-    NewStransaction(this._addTransaction);
+  NewStransaction(this._addTransaction);
   @override
   State<StatefulWidget> createState() {
     return new NewStransactionState(_addTransaction);
@@ -52,6 +53,7 @@ class NewStransactionState extends State<NewStransaction> {
 
   @override
   Widget build(BuildContext context) {
+    print("My New transaction");
     return SingleChildScrollView(
       child: Card(
         elevation: 10,
@@ -93,16 +95,11 @@ class NewStransactionState extends State<NewStransaction> {
                         _timerPicker == null ? 'Not choose data': 'Picker Date: ${DateFormat.yMMMd().format(_timerPicker)}', style: TextStyle(fontWeight: FontWeight.bold),
                        ),
                       ),
-                  FlatButton(onPressed: _showDatePicker, child: Text(
-                    'Choose date',style: Theme.of(context).textTheme.button,
-                  ),
-                  textColor: Theme.of(context).textTheme.button.color,
-                  //color: Theme.of(context).primaryColor,
-                  )
+                    AdapterFlatButton(_showDatePicker, 'Choose Date')
                 ],
               ),
 
-              RaisedButton(
+            RaisedButton(
                 child: Text('add Transaction',),
                 textColor: Theme.of(context).textTheme.button.color,
                 color: Theme.of(context).primaryColor,

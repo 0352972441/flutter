@@ -38,18 +38,28 @@ class MyApp extends StatelessWidget{
 }
 
 class MyHomePage extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return TransactionState();
   }
 }
 
-class TransactionState extends State<MyHomePage>{
+class TransactionState extends State<MyHomePage> with WidgetsBindingObserver{
   
+  @override
+
   // String titleInput;
   // String amountInput;
 
+void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
 
+void didChangeAppLifecycleState(AppLifecycleState state){
+  print("State: ${state}");
+}
    final List<Transaction> _transaction = [
       // Transaction(id: "01", title: "Ball", amount: 99.99, date: DateTime.now()),
       // Transaction(id: "02", title: "Shore", amount: 32.19, date: DateTime.now()),
@@ -97,6 +107,7 @@ class TransactionState extends State<MyHomePage>{
 
   @override
   Widget build(BuildContext context) {
+    print("My home Page");
     final mediaQuery = MediaQuery.of(context);
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
     final PreferredSizeWidget appBar = Platform.isIOS? CupertinoNavigationBar(
@@ -109,54 +120,34 @@ class TransactionState extends State<MyHomePage>{
           )
         ],
       ),
-    ) :AppBar(title: Text("Expenditure management "),
+    ) : AppBar(title: Text("Expenditure management "),
           actions: <Widget>[
             IconButton(icon: Icon(Icons.add, color: Colors.white), onPressed: ()=>_addTransactionDialog(context))
           ],
         );
     
+
+    final listWidget = Container(
+          height: (mediaQuery.size.height * 0.7 - appBar.preferredSize.height),
+          child: TransactionList(_transaction, remoteTransaction),
+        );
+
     final bodyPages = SafeArea(child: SingleChildScrollView(
             child:Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              if(isLandscape)Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Show Chart' ,style: Theme.of(context).textTheme.title,),
-                  Switch.adaptive(value: _showChart, onChanged: (value){
-                    setState(() {
-                      _showChart = value;
-                    });
-                  }),
-                ],
-              ),
               if(!isLandscape)
-                Container(
-                  height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.3 , 
-                  child: Chart(createCharTransacion),
-                ),
-              if(!isLandscape)
-                Container(
-                height: (mediaQuery.size.height * 0.7 - appBar.preferredSize.height),
-                child: TransactionList(_transaction, remoteTransaction),
-              ),
+                ...buildPortraitContent(appBar, mediaQuery, listWidget),
+                //DirectionWidget(appBar, createCharTransacion, mediaQuery, listWidget),
 
               if(isLandscape)
-              _showChart ? Container(
-                  height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.6 , 
-                  child: Chart(createCharTransacion),
-                ):
-              Container(
-                height: (mediaQuery.size.height * 0.7 - appBar.preferredSize.height),
-                child: TransactionList(_transaction, remoteTransaction),
-              )
+                ...buildLandscapeContent(appBar, mediaQuery, listWidget),
             ],
           ), 
         )
     );
 
-      return Platform.isIOS ? CupertinoPageScaffold(child: bodyPages, navigationBar: appBar,) :Scaffold(
+    return Platform.isIOS ? CupertinoPageScaffold(child: bodyPages, navigationBar: appBar,) :Scaffold(
         appBar: appBar,
         body: bodyPages,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -166,5 +157,32 @@ class TransactionState extends State<MyHomePage>{
           onPressed: ()=>_addTransactionDialog(context),
           ),
       );
+  }
+
+  List <Widget> buildLandscapeContent(AppBar appBar, MediaQueryData mediaQuery,Widget listWidget ) {
+    return [Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Show Chart' ,style: Theme.of(context).textTheme.title,),
+                Switch.adaptive(value: _showChart, onChanged: (value){
+                  setState(() {
+                    _showChart = value;
+                  });
+                }),
+              ],
+            ),_showChart ? Container(
+                  height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.6 , 
+                  child: Chart(createCharTransacion),
+                ): listWidget
+              ];
+  }
+
+  List<Widget> buildPortraitContent(AppBar appBar, MediaQueryData mediaQuery, Widget listWidget ){
+    return [
+      Container(
+        height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.3 , 
+        child: Chart(createCharTransacion),
+      ),listWidget
+    ];
   }
 }

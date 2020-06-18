@@ -6,10 +6,11 @@ class CharBar extends StatelessWidget {
   final double spendingAmount;
   final double amount;
 
-  CharBar(this.label, this.amount, this.spendingAmount);
+  const CharBar(this.label, this.amount, this.spendingAmount);
 
   @override
   Widget build(BuildContext context) {
+    print("My Chart bar");
     return LayoutBuilder(builder: (context, contrains){
       return Column(
         children: <Widget>[
