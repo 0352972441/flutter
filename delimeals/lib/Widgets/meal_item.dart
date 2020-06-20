@@ -1,7 +1,9 @@
 import 'package:delimeals/models/meals.dart';
+import '../screens/meal_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class MealItem extends StatelessWidget {
+  final String id;
   final String title;
   final int duration;
   final String imageUrl;
@@ -9,6 +11,7 @@ class MealItem extends StatelessWidget {
   final Affordability affordability;
 
   MealItem({
+    @required this.id,
     @required this.title,
     @required this.imageUrl,
     @required this.duration,
@@ -37,15 +40,16 @@ class MealItem extends StatelessWidget {
         return 'Luxurious';
     }
   }
-
- void selectedItem(){
-
-  }
+  void selectedItem(BuildContext context){
+      Navigator.pushNamed(context, MealDetailScreen.NAMEPAGE, arguments: id);
+    }
+ 
 
   @override
   Widget build(BuildContext context) {
+    
     return InkWell(
-      onTap: selectedItem,
+      onTap: ()=> selectedItem(context),
       child: Card(
         elevation: 4,
         margin: EdgeInsets.all(10),

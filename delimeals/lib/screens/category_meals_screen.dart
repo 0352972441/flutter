@@ -1,6 +1,4 @@
 import 'package:delimeals/Widgets/meal_item.dart';
-
-import '../models/meals.dart';
 import '../models/dummy_data.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +22,7 @@ class CategoryMealsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title),),
       body: ListView.builder(itemBuilder: (context, index){
-        return MealItem(title: categoryMeals[index].title, imageUrl: categoryMeals[index].imageUrl, duration: categoryMeals[index].duration, affordability: categoryMeals[index].affordability, complexity: categoryMeals[index].complexity);
+        return MealItem(title: categoryMeals[index].title, imageUrl: categoryMeals[index].imageUrl, duration: categoryMeals[index].duration, affordability: categoryMeals[index].affordability, complexity: categoryMeals[index].complexity, id: categoryMeals[index].id,);
       },itemCount: categoryMeals.length,)
     );
   }
