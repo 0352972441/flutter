@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/backgrounds"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:src="@drawable/poly"
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:textStyle="bold"
+        android:textColor="@color/labelColor"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/label"
+        android:text="@string/system"/>
+
+    <TextView
+        android:textColor="@color/fontColor"
+        android:textSize="@dimen/sizeFont"
+        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        android:text="@string/user"
+        android:layout_below="@id/label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleuser"/>
+
+    <EditText
+        android:textColor="@color/fontBt"
+        android:textColorHint="@color/fontBt"
+        android:textColorLink="@color/fontBt"
+        android:textColorHighlight="@color/fontBt"
+        android:hint="@string/user"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user"
+
+        android:layout_below="@id/titleuser"/>
+
+    <TextView
+        android:textColor="@color/fontColor"
+        android:textSize="@dimen/sizeFont"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="@string/user"
+        android:layout_below="@id/user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titlepassword"/>
+
+    <EditText
+        android:textColor="@color/fontBt"
+        android:textColorHint="@color/fontBt"
+        android:textColorLink="@color/fontBt"
+        android:textColorHighlight="@color/fontBt"
+
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/password"
+        android:layout_below="@id/titlepassword"/>
+
+
+    <CheckBox
+        android:textColor="@color/fontBt"
+        android:textColorHint="@color/fontBt"
+        android:textColorLink="@color/fontBt"
+        android:textColorHighlight="@color/fontBt"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/password"
+        android:id="@+id/rememberlogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/remember"/>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/marginTop"
+        android:weightSum="5"
+        android:layout_below="@id/rememberlogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:textColor="@color/fontBt"
+            android:background="@color/colorPrimaryDark"
+            android:layout_weight="2"
+            android:onClick="login"
+            android:layout_marginRight="@dimen/marginbt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:id="@+id/btLogin"/>
+
+        <Button
+            android:textColor="@color/fontBt"
+            android:background="@color/colorPrimaryDark"
+            android:layout_weight="2"
+            android:onClick="reset"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/reset"
+            android:id="@+id/btReset"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

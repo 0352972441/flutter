@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.management">
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/system"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activity.Deatail_ListView"
+            android:label="Contact"
+            android:parentActivityName=".Activity.ListInfo"/>
+
+        <activity android:name=".Activity.ListInfo"
+            android:label="Contact list"
+            android:parentActivityName=".Activity.StudentActivity"/>
+        <activity android:name=".Activity.StudentActivity" />
+        <activity
+            android:name=".Activity.Activity_Class"
+            android:parentActivityName=".Activity.Activity_Management" />
+        <activity
+            android:name=".Activity.Activity_Management"
+            android:parentActivityName=".Activity.Activity_Management" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

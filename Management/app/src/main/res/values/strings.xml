@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Management</string>
+    <string name="user">User name</string>
+    <string name="password">Password</string>
+    <string name="system">System Login</string>
+    <string name="login">Login</string>
+    <string name="reset">Reset</string>
+    <string name="cls">Class Management</string>
+    <string name="student">Student Management</string>
+    <string name="id">Class ID</string>
+    <string name="name">Class Name</string>
+    <string name="add">ADD</string>
+    <string name="cancel">Cancel</string>
+    <string name="remote">Remote</string>
+    <string name="edit">Edit</string>
+    <string name="idStudent">ID</string>
+    <string name="nameStudent">Name</string>
+    <string name="phone">Phone</string>
+    <string name="remember">Remember Login</string>
+    <string name="fullName">Name</string>
+</resources>

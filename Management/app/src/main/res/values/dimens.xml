@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sizeFont">20sp</dimen>
+    <dimen name="marginTop">25dp</dimen>
+    <dimen name="marginbt">20dp</dimen>
+</resources>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_contact"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Deatail_ListView">
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/imageContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/contact"/>
+    <RelativeLayout
+        android:layout_below="@id/imageContact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:textColorHint="@color/fontBt"
+                android:hint="@string/fullName"
+                android:textColorLink="@color/fontBt"
+                android:textColorHighlight="@color/fontBt"
+                android:textColor="@color/backgrounBt"
+                android:enabled="false"
+                android:layout_toLeftOf="@id/edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="25dp"
+                android:id="@+id/title"/>
+
+            <ImageView
+                android:onClick="editContact"
+                android:id="@+id/edit"
+                android:scaleType="fitXY"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/edit"/>
+
+            <EditText
+                android:textColorHint="@color/fontBt"
+                android:hint="@string/phone"
+                android:enabled="false"
+                android:textColor="@color/backgrounBt"
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/title"
+                android:layout_toLeftOf="@id/editCall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="25dp"
+                android:id="@+id/phone"/>
+
+            <ImageView
+                android:onClick="editContact"
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/edit"
+                android:id="@+id/editCall"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/edit"/>
+
+            <EditText
+                android:textColorHint="@color/fontBt"
+                android:hint="@string/name"
+                android:textColor="@color/backgrounBt"
+                android:enabled="false"
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/phone"
+                android:layout_toLeftOf="@id/editCall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="25dp"
+                android:id="@+id/className"/>
+
+            <ImageView
+                android:onClick="editContact"
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/editCall"
+                android:id="@+id/editClass"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/edit"/>
+            <LinearLayout
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginTop="150dp"
+                android:layout_below="@id/editClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:onClick="callPhone"
+                    android:src="@drawable/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/call"/>
+
+                <ImageButton
+                    android:onClick="messages"
+                    android:src="@drawable/messager"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/messages"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

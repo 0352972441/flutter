@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundmb"
+    tools:context=".Activity.Activity_Management">
+
+    <ImageView
+        android:src="@drawable/poly"
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"/>
+
+    <Button
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorContact"
+        android:background="@color/backgroundmn"
+        android:onClick="classManager"
+        android:tag="1"
+        android:text="@string/cls"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btclass"/>
+
+    <Button
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorContact"
+        android:background="@color/backgroundmn"
+        android:onClick="studentManager"
+        android:tag="2"
+        android:text="@string/student"
+        android:layout_marginTop="@dimen/marginTop"
+        android:layout_below="@id/btclass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btstudent"/>
+
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="COPYRIGHT thuộc về NGUYỄN VĂN TOÁN"/>
+
+</RelativeLayout>
