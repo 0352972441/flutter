@@ -9,7 +9,7 @@ class CategoryScreen extends StatelessWidget {
    
 
     return  Scaffold(
-        appBar: AppBar(title: const Text('Delimeals'),),
+        //appBar: AppBar(title: const Text('Delimeals'),),
         body: GridView(
             padding: EdgeInsets.all(20),
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

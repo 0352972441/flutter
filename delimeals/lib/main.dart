@@ -1,9 +1,11 @@
 import 'dart:ui';
+import 'package:delimeals/Widgets/favorite_filter.dart';
+import 'package:delimeals/screens/tabs_screen.dart';
+
 import './screens/meal_detail_screen.dart';
 import 'package:delimeals/screens/meal_detail_screen.dart';
 
 import './screens/category_meals_screen.dart';
-import './screens/categories_screen.dart';
 import 'package:flutter/material.dart';
 
 main()=> runApp(MyApp());
@@ -27,9 +29,10 @@ class MyApp extends StatelessWidget {
       //home: CategoryScreen(),
       initialRoute: '/', //default is '/'
       routes: {
-        '/': (context)=> CategoryScreen(),
+        '/': (context)=> TabsScreen(), 
         CategoryMealsScreen.routeName: (context)=> CategoryMealsScreen(),
         MealDetailScreen.NAMEPAGE : (context)=> MealDetailScreen(),
+        FavoriteFilter.ROUTENAME : (context)=> FavoriteFilter(),
       },
       // onGenerateRoute: (settings){
       //   return MaterialPageRoute(builder: (context)=> CategoryMealsScreen());
