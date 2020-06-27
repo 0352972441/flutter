@@ -3,6 +3,10 @@ import'package:flutter/material.dart';
 
 class MealDetailScreen extends StatelessWidget {
 
+  final Function mealFavorite;
+  final Function checkFavorite;
+  MealDetailScreen(this.mealFavorite, this.checkFavorite);
+
   static const String NAMEPAGE = '/detail-meals';
   
   Widget widgetTitle(BuildContext context, String title){
@@ -76,10 +80,8 @@ class MealDetailScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-      child: Icon(Icons.delete),
-      onPressed: (){
-        Navigator.of(context).pop(idAgrs);
-      },
+      child: checkFavorite(idAgrs) ? Icon(Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_border),
+      onPressed: ()=> mealFavorite(idAgrs),
     ),
     );
   }

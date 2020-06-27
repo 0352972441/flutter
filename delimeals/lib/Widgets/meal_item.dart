@@ -9,7 +9,6 @@ class MealItem extends StatelessWidget {
   final String imageUrl;
   final Complexity complexity;
   final Affordability affordability;
-  final Function remoteIndex;
   MealItem({
     @required this.id,
     @required this.title,
@@ -17,7 +16,6 @@ class MealItem extends StatelessWidget {
     @required this.duration,
     @required this.affordability,
     @required this.complexity,    
-    @required this.remoteIndex
   });
 
   String get complexityText{
@@ -44,7 +42,7 @@ class MealItem extends StatelessWidget {
   void selectedItem(BuildContext context){
       Navigator.pushNamed(context, MealDetailScreen.NAMEPAGE, arguments: id).then((value)=>{
         if(value != null){
-          remoteIndex(value)
+          //remoteIndex(value)
         },
       });
     }
@@ -52,7 +50,6 @@ class MealItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Meals Item ");
     return InkWell(
       onTap: ()=> selectedItem(context),
       child: Card(

@@ -4,21 +4,27 @@ import '../screens/Favorite_screen.dart';
 import 'package:flutter/material.dart';
 
 class TabsScreen extends StatefulWidget {
+  final mealFavorite;
+
+  TabsScreen(this.mealFavorite);
+
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-
+  List<Map<String, Object>> _listSelectedPage;
   final List<Map<String, Object>> bottomNavigationBarItem = [
       {'title':'Category', 'icon':Icons.category},
       {'title':'Your Favotite', 'icon': Icons.star}
     ];
-
-  final List<Map<String, Object>> _listSelectedPage = [
+  @override
+  initState(){
+    _listSelectedPage = [
       {'page': CategoryScreen(), 'title': 'Category'},
-      {'page': FavoriteScreen(), 'title': 'Your Favorite'}
+      {'page': FavoriteScreen(widget.mealFavorite), 'title': 'Your Favorite'}
     ];
+  }
 
   int indexSelectedPage = 0;
   void selectedPage(int index){
@@ -31,14 +37,16 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("Tab Screen!");
     return Scaffold(
       appBar: AppBar(title: Text(_listSelectedPage[indexSelectedPage]['title']),),
       drawer: WidgetDraw(),
       body: _listSelectedPage[indexSelectedPage]['page'],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.yellow,
+        selectedFontSize: 14,
         onTap: selectedPage,
         currentIndex: indexSelectedPage,
         items: bottomNavigationBarItem.map((value){

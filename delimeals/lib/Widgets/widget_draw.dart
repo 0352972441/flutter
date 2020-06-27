@@ -17,6 +17,7 @@ class WidgetDraw extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Drawers");
     return Drawer(
       child: Column(
         children: <Widget>[

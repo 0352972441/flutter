@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 
 class FavoriteFilter extends StatefulWidget {
   static const String ROUTENAME = '/filter';
+  final stateCurrent;
+  final Function saveFilter;
+
+  FavoriteFilter(this.stateCurrent, this.saveFilter);
 
   @override
   _FavoriteFilterState createState() => _FavoriteFilterState();
@@ -13,6 +17,15 @@ class _FavoriteFilterState extends State<FavoriteFilter> {
   bool lactoseFree = false;
   bool vegetarian = false;
   bool vegan = false;
+
+  @override
+  initState(){
+    glutenfree = widget.stateCurrent['gluten'];
+    lactoseFree = widget.stateCurrent['lactose'];
+    vegetarian = widget.stateCurrent['vegetarian'];
+    vegan = widget.stateCurrent['vegan'];
+    super.initState();
+  }
 
    _buildSwitchListTile(String title , String subtitle, Function updateState, bool currenState){
     return SwitchListTile(
@@ -27,7 +40,20 @@ class _FavoriteFilterState extends State<FavoriteFilter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Setting'),),
+      appBar: AppBar(title: Text('Setting'),
+      actions: <Widget>[
+        IconButton(icon: Icon(Icons.save, color: Colors.white,), 
+        onPressed: (){
+            final stateCurrent = {
+              'gluten': glutenfree,
+              'lactose': lactoseFree,
+              'vegan': vegan,
+              'vegetarian': vegetarian,
+            };
+            widget.saveFilter(stateCurrent);
+          }
+        )
+      ],),
       drawer: WidgetDraw(),
       body: Column(
         children: <Widget>[
