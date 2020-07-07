@@ -20,7 +20,7 @@ class FavoriteScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    print("create agian favorite");
+    print(" favorite Screen");
     return _mealFavorite.length==0 ? Center(
       child: Text("Not Add Favorite yet ! "),
     ) :

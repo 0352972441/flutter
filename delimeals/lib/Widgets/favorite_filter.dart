@@ -39,6 +39,7 @@ class _FavoriteFilterState extends State<FavoriteFilter> {
 
   @override
   Widget build(BuildContext context) {
+    print("Favorite Filter");
     return Scaffold(
       appBar: AppBar(title: Text('Setting'),
       actions: <Widget>[

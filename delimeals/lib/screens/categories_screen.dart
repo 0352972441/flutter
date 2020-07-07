@@ -6,7 +6,7 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-   
+   print("category screen");
 
     return  Scaffold(
         //appBar: AppBar(title: const Text('Delimeals'),),
