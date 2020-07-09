@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop/screens/manage_products_screen.dart';
 import '../screens/order_screen.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -58,7 +59,16 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacementNamed(
                         context, OrderScreen.ROUTENAME)
                   }),
-          buildListTile(Icons.account_circle, 'Information', context, () {}),
+          buildListTile(Icons.edit, "Manager Product", context, () {
+            return Navigator.pushReplacementNamed(
+                context, ManageProductsScreen.routeName);
+          }),
+          Spacer(),
+          Padding(
+            padding: EdgeInsets.only(bottom: 20),
+            child: buildListTile(
+                Icons.account_circle, 'Information', context, () {}),
+          )
         ],
       )),
     );
