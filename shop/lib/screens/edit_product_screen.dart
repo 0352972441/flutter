@@ -20,10 +20,34 @@ class _EditProductScreenState extends State<EditProductScreen> {
   String imageUrl = '';
   String description = '';
   double price = 0;
+  bool isInit = true;
+  // Map<String, Object> products = {
+  //   "title":"",
+  //   'description': "",
+  //   'price': ""
+  // };
   @override
   void initState() {
     _focusImage.addListener(_updateImage);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (isInit) {
+      final idProduct = ModalRoute.of(context).settings.arguments as String;
+      if (idProduct != null) {
+        final singleProduct =
+            Provider.of<Products>(context).findById(idProduct);
+        //id = singleProduct.id;
+        title = singleProduct.title;
+        _imageControler.text = singleProduct.imageUrl;
+        description = singleProduct.description;
+        price = singleProduct.price;
+      }
+    }
+    isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
@@ -107,6 +131,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
+                      initialValue: title,
                       decoration: InputDecoration(
                           labelText: "Title",
                           labelStyle: TextStyle(fontWeight: FontWeight.bold)),
@@ -122,6 +147,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       },
                     ),
                     TextFormField(
+                      initialValue: price.toString(),
                       decoration: InputDecoration(
                           labelText: "Price",
                           labelStyle: TextStyle(fontWeight: FontWeight.bold)),
@@ -145,6 +171,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       },
                     ),
                     TextFormField(
+                      initialValue: description,
                       decoration: InputDecoration(
                           labelText: "Description",
                           labelStyle: TextStyle(fontWeight: FontWeight.bold)),

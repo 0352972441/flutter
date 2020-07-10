@@ -51,7 +51,7 @@ class ManageProductsScreen extends StatelessWidget {
                         offset: Offset(0, 2))
                   ]),
               margin: EdgeInsets.only(top: 10),
-              child: UserProductItem(
+              child: UserProductItem(products.items[index].id,
                   products.items[index].imageUrl, products.items[index].title),
             );
           },
