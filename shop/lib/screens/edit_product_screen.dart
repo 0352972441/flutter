@@ -15,6 +15,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imageControler = TextEditingController();
   final _focusImage = FocusNode();
   final _keyForm = GlobalKey<FormState>();
+  // var _editedProduct = Product(
+  //   id: null,
+  //   title: '',
+  //   price: 0,
+  //   description: '',
+  //   imageUrl: '',
+  // );
   String title = "";
   String id = null;
   String imageUrl = '';
@@ -138,7 +145,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (value) =>
                           FocusScope.of(context).requestFocus(_focusPrice),
-                      onSaved: (newValue) => title = newValue,
+                      onSaved: (newValue) {
+                        title = newValue;
+                        //   _editedProduct = Product(
+                        // title: newValue,
+                        // price: _editedProduct.price,
+                        // description: _editedProduct.description,
+                        // imageUrl: _editedProduct.imageUrl,
+                        // id: _editedProduct.id,
+                        // isFavorite: _editedProduct.isFavorite);
+                      },
                       validator: (value) {
                         if (value.isEmpty) {
                           return "Please provide a title.";
@@ -156,7 +172,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       focusNode: _focusPrice,
                       onFieldSubmitted: (value) => FocusScope.of(context)
                           .requestFocus(_focusDescription),
-                      onSaved: (newValue) => price = double.parse(newValue),
+                      onSaved: (newValue) {
+                        //   price = double.parse(newValue);
+                        //   _editedProduct = Product(
+                        // title: _editedProduct.title,
+                        // price: double.parse(newValue),
+                        // description: _editedProduct.description,
+                        // imageUrl: _editedProduct.imageUrl,
+                        // id: _editedProduct.id,
+                        // isFavorite: _editedProduct.isFavorite);
+                      },
                       validator: (String value) {
                         if (value.isEmpty) {
                           return "Please enter a price.";
@@ -178,7 +203,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       maxLines: 2,
                       keyboardType: TextInputType.multiline,
                       focusNode: _focusDescription,
-                      onSaved: (newValue) => description = newValue,
+                      onSaved: (newValue) {
+                        description = newValue;
+                        //   _editedProduct = Product(
+                        // title: _editedProduct.title,
+                        // price: _editedProduct.price,
+                        // description: newValue,
+                        // imageUrl: _editedProduct.imageUrl,
+                        // id: _editedProduct.id,
+                        // isFavorite: _editedProduct.isFavorite);
+                      },
                       validator: (value) {
                         if (value.isEmpty) {
                           return "Pleas enter a description.";
@@ -230,7 +264,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               //   print("Running");
                               //   setState(() {});
                               // },
-                              onSaved: (newValue) => imageUrl = newValue,
+                              onSaved: (newValue) {
+                                imageUrl = newValue;
+                                //           _editedProduct = Product(
+                                // title: _editedProduct.title,
+                                // price: _editedProduct.price,
+                                // description: _editedProduct.description,
+                                // imageUrl: newValue,
+                                // id: _editedProduct.id,
+                                // isFavorite: _editedProduct.isFavorite);
+                              },
                               validator: (value) {
                                 String error = '';
                                 if ((error = isValidatorImage(value)) != null) {

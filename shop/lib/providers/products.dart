@@ -41,4 +41,9 @@ class Products with ChangeNotifier {
     _item.add(newProduct);
     notifyListeners();
   }
+
+  void remoteSingle(String id) {
+    _item.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
 }
