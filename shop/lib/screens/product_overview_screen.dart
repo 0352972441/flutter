@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/providers/products.dart';
 import 'package:shop/widgets/badge.dart';
 import 'package:shop/screens/cart_screen.dart';
 import '../providers/carts.dart';
@@ -10,11 +11,45 @@ enum FilterOption { FavoriteOnly, All }
 
 class ProductOverviewScreen extends StatefulWidget {
   bool isFavorite = false;
+  bool isInit = true;
+  bool _isLoading = false;
   @override
   _ProductOverviewScreenState createState() => _ProductOverviewScreenState();
 }
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
+  @override
+  void didChangeDependencies() {
+    if (widget.isInit) {
+      setState(() {
+        widget._isLoading = true;
+      });
+      Provider.of<Products>(context).fetchDatabase().catchError((error) {
+        return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text("An error occured !"),
+                content: Text("Something went wrong !"),
+                actions: <Widget>[
+                  FlatButton(
+                      onPressed: () {
+                        setState(() {});
+                      },
+                      child: Text("Ok"))
+                ],
+              );
+            });
+      }).then((value) {
+        setState(() {
+          widget._isLoading = false;
+        });
+      });
+    }
+    widget.isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     //final showProduct = Provider.of<Products>(context);
@@ -63,7 +98,13 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           ],
         ),
         drawer: dr.MyDrawer(),
-        body: ProductsGrid(widget.isFavorite));
+        body: widget._isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.orange,
+                ),
+              )
+            : ProductsGrid(widget.isFavorite));
   }
 }
 

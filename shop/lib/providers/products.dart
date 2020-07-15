@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:shop/providers/product.dart';
 import '../DUMMY_PRODUCT.dart';
@@ -35,18 +33,38 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<Void> addProduct(Product product) {
+  Future<void> fetchDatabase() async {
     const URL = "https://flutter-update-a40ab.firebaseio.com/SanPham.json";
-    return http
-        .post(URL,
-            body: json.encode({
-              "title": product.title,
-              "desciption": product.description,
-              "imageUrl": product.imageUrl,
-              "price": product.price
-            }))
-        .then((http.Response response) {
-      Product newProduct = Product(
+    try {
+      final response = await http.get(URL);
+      final extraData = json.decode(response.body) as Map<String, dynamic>;
+      extraData.forEach((key, value) {
+        _item.add(Product(
+            id: key,
+            title: value['title'],
+            description: value['description'],
+            price: value['price'],
+            imageUrl: value['imageUrl']));
+      });
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<void> addProduct(Product product) async {
+    const URL = "https://flutter-update-a40ab.firebaseio.com/SanPham.json";
+    try {
+      final response = await http.post(URL,
+          body: json.encode({
+            "title": product.title,
+            "description": product.description,
+            "imageUrl": product.imageUrl,
+            "price": product.price,
+            "isFavorite": false
+          }));
+
+      final Product newProduct = Product(
           id: json.decode(response.body)['name'],
           title: product.title,
           description: product.description,
@@ -54,7 +72,9 @@ class Products with ChangeNotifier {
           imageUrl: product.imageUrl);
       _item.add(newProduct);
       notifyListeners();
-    });
+    } catch (error) {
+      throw error;
+    }
   }
 
   void remoteSingle(String id) {

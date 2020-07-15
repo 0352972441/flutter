@@ -13,6 +13,8 @@ class ProductDetailScreen extends StatelessWidget {
     final id = ModalRoute.of(context).settings.arguments as String;
     final Product product =
         Provider.of<Products>(context, listen: false).findById(id);
+    print(
+        "Have : ${product.title} and ${product.price} and ${product.description}");
     return Scaffold(
       appBar: AppBar(
           title: Text(

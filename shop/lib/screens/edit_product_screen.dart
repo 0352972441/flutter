@@ -105,7 +105,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
-  void _saveForm() {
+  /*void _saveForm() {
     bool isValidator = _keyForm.currentState.validate();
     if (!isValidator) {
       return;
@@ -113,18 +113,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _keyForm.currentState.save();
     setState(() {
       isLoading = true;
-    });
-    // Product product = new Product(
-    //     id: null,
-    //     title: title,
-    //     description: description,
-    //     price: price,
-    //     imageUrl: imageUrl);
+    });  
     Product product = _editedProduct;
-    // print(product.title);
-    // print(product.description);
-    // print(product.price);
-    // print(product.imageUrl);
     if (_editedProduct.id != null) {
       Provider.of<Products>(context, listen: false)
           .updateSingleProduct(product.id, product);
@@ -135,12 +125,74 @@ class _EditProductScreenState extends State<EditProductScreen> {
     } else {
       Provider.of<Products>(context, listen: false)
           .addProduct(product)
-          .then((_) {
-        Navigator.pop(context);
+          .catchError((error) {
+        return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              elevation: 5,
+              title: Text("An error occured!",
+                  style: TextStyle(color: Colors.orange)),
+              content: Text("Something went wrong!"),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () {
+                      return Navigator.of(context).pop();
+                    },
+                    child: Text("Okay"))
+              ],
+            );
+          },
+        );
+      }).then((_) {
+        print("Running Pop");
         setState(() {
           isLoading = false;
         });
+        Navigator.pop(context);
       });
+    }
+  }*/
+  Future<void> _saveForm() async {
+    final bool isValidator = _keyForm.currentState.validate();
+    if (!isValidator) {
+      return;
+    }
+    _keyForm.currentState.save();
+    setState(() {
+      isLoading = true;
+    });
+    Product product = _editedProduct;
+    if (product.id != null) {
+      Provider.of<Products>(context, listen: false)
+          .updateSingleProduct(product.id, product);
+      setState(() {
+        isLoading = false;
+      });
+      Navigator.pop(context);
+    } else {
+      try {
+        await Provider.of<Products>(context, listen: false).addProduct(product);
+      } catch (error) {
+        await showDialog(
+            context: context,
+            builder: (ctx) {
+              return AlertDialog(
+                titleTextStyle: TextStyle(color: Colors.orange),
+                title: Text("An error Occured !"),
+                content: Text("Something went wrong !"),
+                actions: <Widget>[
+                  FlatButton(
+                      onPressed: () => Navigator.pop(ctx), child: Text("Okay"))
+                ],
+              );
+            });
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+        Navigator.pop(context);
+      }
     }
   }
 
@@ -149,8 +201,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
     print("Edit product");
     return Scaffold(
       body: isLoading
-          ? Container(
-              child: CircularProgressIndicator(),
+          ? Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.green,
+              ),
             )
           : SingleChildScrollView(
               child: Column(
@@ -274,11 +328,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 ),
                                 child: _imageControler.text.isEmpty
                                     ? Text("Enter a url")
-                                    : FittedBox(
-                                        child: Image.network(
+                                    : Image.network(
                                         _imageControler.text,
                                         fit: BoxFit.cover,
-                                      )),
+                                      ),
+                                // : FittedBox(
+                                //     child: Image.network(
+                                //     _imageControler.text,
+                                //     fit: BoxFit.cover,
+                                //   )),
                               ),
                               Expanded(
                                 child: Padding(

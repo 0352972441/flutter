@@ -109,10 +109,10 @@ class buildClip extends CustomClipper<Path> {
     return path;
   }
 
-  @override
-  bool shouldRe(Size size) {
-    return false;
-  }
+  // @override
+  // bool shouldRe(Size size) {
+  //   return false;
+  // }
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {

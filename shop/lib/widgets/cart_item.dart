@@ -43,6 +43,7 @@ class CartItem extends StatelessWidget {
                 FlatButton(
                     onPressed: () {
                       Navigator.pop(context, false);
+                      // Navigator.pop(context, false);
                     },
                     child: Text("Cancel")),
               ],
@@ -51,6 +52,7 @@ class CartItem extends StatelessWidget {
         );
       },
       onDismissed: (direction) {
+        print("True is Remote");
         Provider.of<Carts>(context, listen: false).remove(keyItem);
       },
       child: Card(
