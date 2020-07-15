@@ -88,8 +88,9 @@ class Products with ChangeNotifier {
     notifyListeners();
     final URL = "https://flutter-update-a40ab.firebaseio.com/SanPham/$id";
     final response = await http.delete(URL);
-
+    print("One line");
     if (response.statusCode >= 400) {
+      print("Two Line");
       _item.insert(existProductIndex, existProduct);
       notifyListeners();
       throw new HttpException("Could not delete product ! ");

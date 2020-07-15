@@ -34,7 +34,9 @@ class UserProductItem extends StatelessWidget {
                   try {
                     await Provider.of<Products>(context, listen: false)
                         .remoteSingle(id);
+                    print("Three Line");
                   } on HttpException {
+                    print("four Line");
                     scaffold
                         .showSnackBar(SnackBar(content: Text("Delete fail !")));
                   } catch (error) {
