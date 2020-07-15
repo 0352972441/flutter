@@ -1,0 +1,1 @@
+_ Khi Phương thức Future (async ) Nếm ngoại lệ thì Khi sử dụng phương thức thì nên Async await ở phương thức xử lý lỗi trách trường hợp Future chưa Ném ngoại lệ thì phương thức Xử lý lỗi đã chạy xong phương thức và thoát khỏi phương thức
