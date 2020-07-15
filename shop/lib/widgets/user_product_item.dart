@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/models/httpException.dart';
 import 'package:shop/providers/products.dart';
 import 'package:shop/screens/edit_product_screen.dart';
 
@@ -10,6 +11,7 @@ class UserProductItem extends StatelessWidget {
   UserProductItem(this.id, this.image, this.title);
   @override
   Widget build(BuildContext context) {
+    final ScaffoldState scaffold = Scaffold.of(context);
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(image),
@@ -28,9 +30,17 @@ class UserProductItem extends StatelessWidget {
             IconButton(
                 icon: Icon(Icons.delete),
                 color: Theme.of(context).errorColor,
-                onPressed: () {
-                  Provider.of<Products>(context, listen: false)
-                      .remoteSingle(id);
+                onPressed: () async {
+                  try {
+                    await Provider.of<Products>(context, listen: false)
+                        .remoteSingle(id);
+                  } on HttpException {
+                    scaffold
+                        .showSnackBar(SnackBar(content: Text("Delete fail !")));
+                  } catch (error) {
+                    scaffold
+                        .showSnackBar(SnackBar(content: Text("Delete fail !")));
+                  }
                 }),
           ],
         ),

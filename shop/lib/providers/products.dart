@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop/models/httpException.dart';
 import 'package:shop/providers/product.dart';
 import '../DUMMY_PRODUCT.dart';
 import 'package:http/http.dart' as http;
@@ -38,14 +39,17 @@ class Products with ChangeNotifier {
     try {
       final response = await http.get(URL);
       final extraData = json.decode(response.body) as Map<String, dynamic>;
+      //print("Fetch ${response.statusCode}");
+      final List<Product> loadingItem = [];
       extraData.forEach((key, value) {
-        _item.add(Product(
+        loadingItem.add(Product(
             id: key,
             title: value['title'],
             description: value['description'],
             price: value['price'],
             imageUrl: value['imageUrl']));
       });
+      _item = loadingItem;
       notifyListeners();
     } catch (error) {
       throw error;
@@ -77,16 +81,38 @@ class Products with ChangeNotifier {
     }
   }
 
-  void remoteSingle(String id) {
-    _item.removeWhere((element) => element.id == id);
+  Future<void> remoteSingle(String id) async {
+    final existProductIndex = _item.indexWhere((element) => element.id == id);
+    var existProduct = _item[existProductIndex];
+    _item.removeAt(existProductIndex);
     notifyListeners();
+    final URL = "https://flutter-update-a40ab.firebaseio.com/SanPham/$id";
+    final response = await http.delete(URL);
+
+    if (response.statusCode >= 400) {
+      _item.insert(existProductIndex, existProduct);
+      notifyListeners();
+      throw new HttpException("Could not delete product ! ");
+    }
+    existProduct = null;
   }
 
-  void updateSingleProduct(String id, newProduct) {
-    final indexOldProduct = _item.indexWhere((element) => id == element.id);
-    if (indexOldProduct >= 0) {
-      _item[indexOldProduct] = newProduct;
-      notifyListeners();
-    }
+  Future<void> updateSingleProduct(String id, Product newProduct) async {
+    final URL = "https://flutter-update-a40ab.firebaseio.com/SanPham/$id.json";
+    await http
+        .patch(URL,
+            body: json.encode({
+              "title": newProduct.title,
+              "description": newProduct.description,
+              "price": newProduct.price,
+              "imageUrl": newProduct.imageUrl,
+            }))
+        .then((value) {
+      final indexOldProduct = _item.indexWhere((element) => id == element.id);
+      if (indexOldProduct >= 0) {
+        _item[indexOldProduct] = newProduct;
+        notifyListeners();
+      }
+    });
   }
 }
