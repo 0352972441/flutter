@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Products with ChangeNotifier {
-  List<Product> _item = DUMMY_PRODUCT.map((e) => e).toList();
+  List<Product> _item = []; //DUMMY_PRODUCT.map((e) => e).toList();
   //bool _isCheck = false;
 
   get items {
@@ -40,18 +40,22 @@ class Products with ChangeNotifier {
       final response = await http.get(URL);
       final extraData = json.decode(response.body) as Map<String, dynamic>;
       //print("Fetch ${response.statusCode}");
+      //print(json.decode(response.body));
       final List<Product> loadingItem = [];
       extraData.forEach((key, value) {
+        //print("Key là : ${key}");
         loadingItem.add(Product(
             id: key,
             title: value['title'],
             description: value['description'],
             price: value['price'],
-            imageUrl: value['imageUrl']));
+            imageUrl: value['imageUrl'],
+            isFavorite: value['isFavorite']));
       });
       _item = loadingItem;
       notifyListeners();
     } catch (error) {
+      //print("đã ném ngoại lệ");
       throw error;
     }
   }
@@ -67,7 +71,7 @@ class Products with ChangeNotifier {
             "price": product.price,
             "isFavorite": false
           }));
-
+      print(json.decode(response.body));
       final Product newProduct = Product(
           id: json.decode(response.body)['name'],
           title: product.title,
@@ -86,7 +90,7 @@ class Products with ChangeNotifier {
     var existProduct = _item[existProductIndex];
     _item.removeAt(existProductIndex);
     notifyListeners();
-    final URL = "https://flutter-update-a40ab.firebaseio.com/SanPham/$id";
+    final URL = "https://flutter-update-a40ab.firebaseio.com/SanPham/$id.json";
     final response = await http.delete(URL);
     print("One line");
     if (response.statusCode >= 400) {

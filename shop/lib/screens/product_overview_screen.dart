@@ -24,33 +24,53 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
       setState(() {
         widget._isLoading = true;
       });
-      Provider.of<Products>(context).fetchDatabase()
-          //.catchError((error) {
-          //   return showDialog(
-          //       context: context,
-          //       builder: (context) {
-          //         return AlertDialog(
-          //           actionsPadding:
-          //               EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-          //           titleTextStyle: TextStyle(
-          //               color: Colors.orange, fontWeight: FontWeight.bold),
-          //           title: Text("An error occured !"),
-          //           content: Text("Something went wrong !"),
-          //           actions: <Widget>[
-          //             FlatButton(
-          //                 onPressed: () {
-          //                   setState(() {});
-          //                 },
-          //                 child: Text("Ok"))
-          //           ],
-          //         );
-          //       });
-          // })
-          .then((value) {
+      Provider.of<Products>(context).fetchDatabase().catchError((error) {
+        return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                actionsPadding:
+                    EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                titleTextStyle: TextStyle(
+                    color: Colors.orange, fontWeight: FontWeight.bold),
+                title: Text("An error occured !"),
+                content: Text("Something went wrong !"),
+                actions: <Widget>[
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Ok"))
+                ],
+              );
+            });
+      }).then((value) {
         setState(() {
           widget._isLoading = false;
         });
       });
+      //.catchError((error) {
+      //   return showDialog(
+      //       context: context,
+      //       builder: (context) {
+      //         return AlertDialog(
+      //           actionsPadding:
+      //               EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+      //           titleTextStyle: TextStyle(
+      //               color: Colors.orange, fontWeight: FontWeight.bold),
+      //           title: Text("An error occured !"),
+      //           content: Text("Something went wrong !"),
+      //           actions: <Widget>[
+      //             FlatButton(
+      //                 onPressed: () {
+      //                   setState(() {});
+      //                 },
+      //                 child: Text("Ok"))
+      //           ],
+      //         );
+      //       });
+      // })
+
     }
     widget.isInit = false;
     super.didChangeDependencies();
