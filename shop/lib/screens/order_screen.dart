@@ -4,8 +4,32 @@ import 'package:shop/widgets/drawers.dart';
 import '../providers/order.dart';
 import '../widgets/order_item.dart';
 
-class OrderScreen extends StatelessWidget {
+class OrderScreen extends StatefulWidget {
   static const String ROUTENAME = '/orderscreen';
+  bool _isLoading = false;
+  @override
+  _OrderScreenState createState() => _OrderScreenState();
+}
+
+class _OrderScreenState extends State<OrderScreen> {
+  // @override
+  // void initState() {
+  //   Future.delayed(Duration.zero).then((value) async =>
+  //       {await Provider.of<Order>(context, listen: false).fetchDatabase()});
+  //   super.initState();
+  // }
+  bool _ischeck = true;
+  @override
+  void didChangeDependencies() {
+    if (_ischeck) {
+      Provider.of<Order>(context, listen: false)
+          .fetchDatabase()
+          .then((value) => print("Ok"));
+    }
+    _ischeck = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final orderData = Provider.of<Order>(context);

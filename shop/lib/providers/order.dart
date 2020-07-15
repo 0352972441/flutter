@@ -12,6 +12,29 @@ class Order extends ChangeNotifier {
     return [..._orders];
   }
 
+  Future<void> fetchDatabase() async {
+    const URL = "https://flutter-update-a40ab.firebaseio.com/order.json";
+    final response = await http.get(URL);
+    final List<OrderItem> orderLoading = [];
+    final extraData = json.decode(response.body) as Map<String, dynamic>;
+    extraData.forEach((orderId, orderData) {
+      orderLoading.add(OrderItem(
+        id: orderId,
+        dateTime: DateTime.parse(orderData["dateTime"]),
+        total: orderData["total"],
+        product: (orderData["product"] as List<dynamic>).map((value) {
+          return Cart(
+              id: value['id'],
+              title: value['title'], //value['title'],
+              price: value['price'],
+              quantity: value['quantity']);
+        }).toList(),
+      ));
+    });
+    _orders = orderLoading;
+    notifyListeners();
+  }
+
   Future<void> addOrder(double total, List<Cart> product) async {
     const URL = "https://flutter-update-a40ab.firebaseio.com/order.json";
     final timeStamp = DateTime.now();
@@ -19,9 +42,11 @@ class Order extends ChangeNotifier {
       final response = await http.post(URL,
           body: json.encode({
             "total": total,
-            'dateTime': DateFormat()
+            'dateTime':
+                /*DateFormat()
                 .add_yMMMd()
-                .format(DateTime.now()) /*timeStamp.toIso8601String()*/,
+                .format(DateTime.now())*/
+                timeStamp.toIso8601String(),
             "product": product
                 .map((value) => {
                       "id": value.id,
