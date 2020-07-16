@@ -60,7 +60,7 @@ class Carts with ChangeNotifier {
               id: value.id,
               title: value.title,
               price: value.price,
-              quantity: value.quantity + 1));
+              quantity: value.quantity - 1));
     } else {
       remove(productId);
     }

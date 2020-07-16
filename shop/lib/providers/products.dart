@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop/models/httpException.dart';
 import 'package:shop/providers/product.dart';
-import '../DUMMY_PRODUCT.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
