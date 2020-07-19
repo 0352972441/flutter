@@ -4,19 +4,23 @@ import 'package:flutter/cupertino.dart';
 import '../models/order_item.dart';
 import '../models/cart.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Order extends ChangeNotifier {
   List<OrderItem> _orders = [];
-
+  final String _token;
   List<OrderItem> get order {
     return [..._orders];
   }
 
+  Order(this._token, this._orders);
+
   Future<void> fetchDatabase() async {
-    const URL = "https://flutter-update-a40ab.firebaseio.com/order.json";
+    final URL = "${DotEnv().env['URL']}/order.json?auth=$_token";
     final response = await http.get(URL);
     final List<OrderItem> orderLoading = [];
     final extraData = json.decode(response.body) as Map<String, dynamic>;
+
     extraData.forEach((orderId, orderData) {
       orderLoading.add(OrderItem(
         id: orderId,
@@ -31,12 +35,13 @@ class Order extends ChangeNotifier {
         }).toList(),
       ));
     });
-    _orders = orderLoading;
+
+    _orders = orderLoading.reversed.toList();
     notifyListeners();
   }
 
   Future<void> addOrder(double total, List<Cart> product) async {
-    const URL = "https://flutter-update-a40ab.firebaseio.com/order.json";
+    final URL = "${DotEnv().env['URL']}/order.json?auth=$_token";
     final timeStamp = DateTime.now();
     try {
       final response = await http.post(URL,
@@ -56,6 +61,7 @@ class Order extends ChangeNotifier {
                     })
                 .toList()
           }));
+
       _orders.add(OrderItem(
           id: json.decode(response.body)['name'],
           dateTime: timeStamp,

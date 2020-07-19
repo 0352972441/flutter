@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/models/httpException.dart';
 import 'package:shop/providers/auth.dart';
+import '../models/httpException.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -105,6 +107,23 @@ class _AuthCardState extends State<AuthCard> {
     super.dispose();
   }
 
+  void showDialogNotifier(message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          titleTextStyle: TextStyle(color: Colors.purple),
+          title: Text("An error Occurred"),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () => Navigator.pop(context), child: Text("OK"))
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _onSumit() async {
     final validator = _globalKey.currentState.validate();
     if (!validator) {
@@ -114,16 +133,40 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      // do something login
-      await Provider.of<Auth>(context, listen: false)
-          .signIn(user['email'], user['password']);
-    } else {
-      await Provider.of<Auth>(context, listen: false)
-          .signUp(user['email'], user['password']);
-      //do something signup
+    try {
+      if (_authMode == AuthMode.Login) {
+        // do something login
+        await Provider.of<Auth>(context, listen: false)
+            .signIn(user['email'], user['password']);
+      } else {
+        await Provider.of<Auth>(context, listen: false)
+            .signUp(user['email'], user['password']);
+        //do something signup
+      }
+    } on HttpException catch (error) {
+      var onMessage = "";
+      if (error.toString().contains("EMAIL_NOT_FOUND")) {
+        onMessage = "The email address is incorrect, Please check again ";
+      } else if (error.toString().contains("INVALID_PASSWORD")) {
+        onMessage = "Incorrrect password, Please try again later";
+      } else if (error.toString().contains("USER_DISABLED")) {
+        onMessage = "Account disabled , Please try again later";
+      } else if (error.toString().contains("EMAIL_EXISTS")) {
+        onMessage = "Email address already in use, Please try again ";
+      } else if (error.toString().contains("OPERATION_NOT_ALLOWED")) {
+        onMessage = "Password login is disable for this project";
+      } else if (error.toString().contains("TOO_MANY_ATTEMPTS_TRY_LATER")) {
+        onMessage =
+            "We have blocked all requests from this device due to unusual activity. Try again later.";
+      } else if (error.toString().contains("INVALID_EMAIL")) {
+        onMessage = "Invalid email, Please check again";
+      }
+      showDialogNotifier(onMessage);
+    } catch (error) {
+      const onMessage = "Could not authenticate you. Please try again later";
+      showDialogNotifier(onMessage);
     }
-    _globalKey.currentState.reset();
+    //_globalKey.currentState.reset();
     setState(() {
       _isLoading = false;
     });
@@ -239,11 +282,12 @@ class _AuthCardState extends State<AuthCard> {
                     textColor: Theme.of(context).primaryTextTheme.button.color,
                   ),
                 FlatButton(
-                  child: Text(AuthMode == AuthMode.Signup
-                      ? "SIGNUP"
-                      : "LOGIN" + " INSTEAD"),
+                  child: Text(
+                    _authMode == AuthMode.Login ? "SIGNUP" : "LOGIN",
+                    style: TextStyle(fontSize: 15),
+                  ),
                   onPressed: _switchAuthMode,
-                  padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                  padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   textColor: Theme.of(context).primaryColor,
                 ),

@@ -3,11 +3,13 @@ import 'package:shop/models/httpException.dart';
 import 'package:shop/providers/product.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Products with ChangeNotifier {
   List<Product> _item = []; //DUMMY_PRODUCT.map((e) => e).toList();
   //bool _isCheck = false;
-
+  final String _idToken;
+  Products(this._idToken);
   get items {
     // if (_isCheck) {
     //   return _item.where((element) => element.isFavorite).toList();
@@ -34,7 +36,7 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchDatabase() async {
-    const URL = "https://flutter-update-a40ab.firebaseio.com/SanPham.json";
+    final URL = '${DotEnv().env['URL']}/SanPham.json?auth=$_idToken';
     try {
       final response = await http.get(URL);
       final extraData = json.decode(response.body) as Map<String, dynamic>;
@@ -43,14 +45,16 @@ class Products with ChangeNotifier {
       final List<Product> loadingItem = [];
       extraData.forEach((key, value) {
         //print("Key là : ${key}");
-        loadingItem.add(Product(
+        var prod = new Product(
             id: key,
             title: value['title'],
             description: value['description'],
             price: value['price'],
             imageUrl: value['imageUrl'],
-            isFavorite: value['isFavorite']));
+            isFavorite: value['isFavorite']);
+        loadingItem.add(prod);
       });
+
       _item = loadingItem;
       notifyListeners();
     } catch (error) {
@@ -60,7 +64,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    const URL = "https://flutter-update-a40ab.firebaseio.com/SanPham.json";
+    final URL = '${DotEnv().env['URL']}/SanPham.json?auth=${_idToken}';
     try {
       final response = await http.post(URL,
           body: json.encode({
@@ -89,11 +93,11 @@ class Products with ChangeNotifier {
     var existProduct = _item[existProductIndex];
     _item.removeAt(existProductIndex);
     notifyListeners();
-    final URL = "https://flutter-update-a40ab.firebaseio.com/SanPham/$id.json";
+    final URL = "${DotEnv().env['URL']}/SanPham/$id.json?auth=$_idToken";
     final response = await http.delete(URL);
     print("One line");
     if (response.statusCode >= 400) {
-      print("Two Line");
+      print(response.body);
       _item.insert(existProductIndex, existProduct);
       notifyListeners();
       throw new HttpException("Could not delete product ! ");
@@ -102,7 +106,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> updateSingleProduct(String id, Product newProduct) async {
-    final URL = "https://flutter-update-a40ab.firebaseio.com/SanPham/$id.json";
+    final URL = "${DotEnv().env['URL']}/SanPham/$id.json?auth=$_idToken";
     await http
         .patch(URL,
             body: json.encode({

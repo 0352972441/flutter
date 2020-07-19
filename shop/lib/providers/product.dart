@@ -19,11 +19,12 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
-  Future<void> toggleChangeFavorite(String id) async {
+  Future<void> toggleChangeFavorite(String id, String idToken) async {
     final existFavorite = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
-    final URL = "https://flutter-update-a40ab.firebaseio.com/SanPham/$id.json";
+    final URL =
+        "https://flutter-update-a40ab.firebaseio.com/SanPham/$id.json?auth=$idToken";
     try {
       // final response =
       final response =
