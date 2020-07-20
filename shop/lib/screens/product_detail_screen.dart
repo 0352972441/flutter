@@ -28,9 +28,12 @@ class ProductDetailScreen extends StatelessWidget {
               width: double.infinity,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  product.imageUrl,
-                  fit: BoxFit.cover,
+                child: Hero(
+                  tag: product.id,
+                  child: Image.network(
+                    product.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               margin: EdgeInsets.all(10),

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/models/customAnimation.dart';
 import 'package:shop/models/httpException.dart';
 import 'package:shop/providers/auth.dart';
 import '../models/httpException.dart';
@@ -102,6 +103,7 @@ class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
   bool _isLoading = false;
   AnimationController _controller;
   Animation<Size> _heightContainer;
+  Animation<double> _opacityText;
   Map<String, String> user = {"email": "", "password": ""};
 
   @override
@@ -116,6 +118,7 @@ class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
     // _heightContainer.addListener(() {
     //   setState(() {});
     // });
+    _opacityText = CustomAnimation.animations(_controller);
   }
 
   @override
@@ -270,25 +273,35 @@ class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
                     //return null
                   },
                 ),
-                if (_authMode == AuthMode.Signup)
-                  TextFormField(
-                      obscureText: true,
-                      enabled: _authMode == AuthMode.Signup,
-                      decoration: InputDecoration(
-                        labelText: "Confirm password",
-                        prefixIcon: Icon(Icons.vpn_key),
-                        labelStyle: TextStyle(
-                            fontFamily: "Anto", fontWeight: FontWeight.bold),
-                      ),
-                      onSaved: (value) {},
-                      validator: _authMode == AuthMode.Signup
-                          ? (value) {
-                              if (value != _controlerPassword.text) {
-                                return "Password do not match!";
+                //if (_authMode == AuthMode.Signup)
+                AnimatedContainer(
+                  duration: Duration(seconds: 1),
+                  curve: Curves.easeIn,
+                  constraints: BoxConstraints(
+                      minHeight: _authMode == AuthMode.Signup ? 10 : 0,
+                      maxHeight: _authMode == AuthMode.Signup ? 100 : 0),
+                  child: FadeTransition(
+                    opacity: _opacityText,
+                    child: TextFormField(
+                        obscureText: true,
+                        enabled: _authMode == AuthMode.Signup,
+                        decoration: InputDecoration(
+                          labelText: "Confirm password",
+                          prefixIcon: Icon(Icons.vpn_key),
+                          labelStyle: TextStyle(
+                              fontFamily: "Anto", fontWeight: FontWeight.bold),
+                        ),
+                        onSaved: (value) {},
+                        validator: _authMode == AuthMode.Signup
+                            ? (value) {
+                                if (value != _controlerPassword.text) {
+                                  return "Password do not match!";
+                                }
+                                return null;
                               }
-                              return null;
-                            }
-                          : null),
+                            : null),
+                  ),
+                ),
                 SizedBox(
                   height: 20,
                 ),

@@ -31,7 +31,15 @@ class ProductItem extends StatelessWidget {
                   arguments: product.id);
             },
             splashColor: Colors.blue,
-            child: Image.network(product.imageUrl, fit: BoxFit.cover)),
+            child: Hero(
+              tag: product.id,
+              child: FadeInImage(
+                  placeholder: AssetImage('assets/images/icon.jpg'),
+                  image: NetworkImage(
+                    product.imageUrl,
+                  ),
+                  fit: BoxFit.cover),
+            )),
         footer: GridTileBar(
           title: Text(product.title,
               textAlign: TextAlign.center,

@@ -1,0 +1,42 @@
+with SingleTickerProviderStateMixi
+
+
+thiết lập bộ điều khiển hoạt hình và tôi sẽ lưu nó ở đây trong bộ điều khiển, biến điều khiển
+và xin lưu ý đây là một biến, tôi chỉ sử dụng loại thay vì từ khóa var vì tôi không khởi tạo
+điều này với một giá trị và do đó loại này sẽ không được biết đến với bộ điều khiển hoạt hình và hoạt hình
+à một lớp được cung cấp bởi Flutter giúp chúng ta kiểm soát hoạt hình như tên cho thấy.
++ AnimationControler 
+-Khởi tạo AnimationControler : Constructor nhận vào 2 tham số
++ vsync:(this) về cơ bản là một đối số trong đó chúng ta cung cấp cho bộ điều khiển hoạt hình một con trỏ tại đối tượng,
++ Thời gian: 
+- Thiết lập một đối tượng animation: Animation<Generic> name = new TWeen();
+*TWeen nhân vào 2 tham số
++ begin: Size(Chiều cao , Chiều rộng)
++ end : Size(Chiều cao , chiều rộng)
+.animate(
+	CuverAnimation(
+		parent: AnimationControler,
+		curve : Hiệu ứng tạo animation
+	)
+)
+
+Final: Animation.addListenner(()=>setState()): Thiết lập lắng nghe thay đổi animation 
+
+==================================================================================================
+II> Sử dung animatedBuilder
+
+- (Listener animation , Builder: (context, child)=> widget sẽ render lại, child: Thuộc tính sẽ không render lại)
+
+III> Work with animatedContainer
+
+- AnimatedContainer(
+	duration: thời gian
+	Curvers : hiệu ứng
+): Không cần sử dụng đên animation and AnimatedCotroller
+
+- FadeTransition: (opacity: độ mờ (Animation<Opacity>), child)
+- slideTransition: (position: animation<Offets>)
+
+IV> Fading loading image
+
+- FadeInImage(placeHorder: image, image: image(image))
