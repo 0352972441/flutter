@@ -4,12 +4,14 @@ import 'package:shop/providers/product.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../models/wherefirebase.dart';
 
 class Products with ChangeNotifier {
   List<Product> _item = []; //DUMMY_PRODUCT.map((e) => e).toList();
   //bool _isCheck = false;
   final String _idToken;
-  Products(this._idToken);
+  final String _userId;
+  Products(this._idToken, this._userId);
   get items {
     // if (_isCheck) {
     //   return _item.where((element) => element.isFavorite).toList();
@@ -36,11 +38,14 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchDatabase() async {
-    final URL = '${DotEnv().env['URL']}/SanPham.json?auth=$_idToken';
+    final URL =
+        '${DotEnv().env['URL']}/SanPham.json${FBWhere.whereTo(_idToken, "userId", _userId)}';
+    //
+    //?auth=$_idToken&oderBy="userId"&equaTo="$_userId"
     try {
       final response = await http.get(URL);
       final extraData = json.decode(response.body) as Map<String, dynamic>;
-      //print("Fetch ${response.statusCode}");
+      //print("Fetch ${response.statusCode}"l);
       //print(json.decode(response.body));
       final List<Product> loadingItem = [];
       extraData.forEach((key, value) {
@@ -72,7 +77,8 @@ class Products with ChangeNotifier {
             "description": product.description,
             "imageUrl": product.imageUrl,
             "price": product.price,
-            "isFavorite": false
+            "isFavorite": false,
+            "userId": _userId,
           }));
       print(json.decode(response.body));
       final Product newProduct = Product(

@@ -38,35 +38,40 @@ class ManageProductsScreen extends StatelessWidget {
       //       return UserProductItem(
       //           products.items[index].imageUrl, products.items[index].title);
       //     })
-      body: RefreshIndicator(
-        onRefresh: () => refresh(context),
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: ListView.builder(
-            padding: EdgeInsets.only(top: 15),
-            itemBuilder: (context, index) {
-              return Container(
-                decoration: BoxDecoration(
-                    // border: Border.all(
-                    //   color: Colors.blue,
-                    //   width: 1,
-                    // ),
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.blue.withOpacity(0.6),
-                          offset: Offset(0, 2))
-                    ]),
-                margin: EdgeInsets.only(top: 10),
-                child: UserProductItem(
-                    products.items[index].id,
-                    products.items[index].imageUrl,
-                    products.items[index].title),
-              );
-            },
-            itemCount: products.items.length,
-          ),
-        ),
+      body: FutureBuilder(
+        builder: (context, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? CircularProgressIndicator()
+                : RefreshIndicator(
+                    onRefresh: () => refresh(context),
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: ListView.builder(
+                        padding: EdgeInsets.only(top: 15),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                // border: Border.all(
+                                //   color: Colors.blue,
+                                //   width: 1,
+                                // ),
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.blue.withOpacity(0.6),
+                                      offset: Offset(0, 2))
+                                ]),
+                            margin: EdgeInsets.only(top: 10),
+                            child: UserProductItem(
+                                products.items[index].id,
+                                products.items[index].imageUrl,
+                                products.items[index].title),
+                          );
+                        },
+                        itemCount: products.items.length,
+                      ),
+                    ),
+                  ),
       ),
     );
   }

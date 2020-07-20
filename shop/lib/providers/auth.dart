@@ -1,16 +1,23 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import '../models/httpException.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
   String _idToken; // Id token tạo bởi firebase cho người dùng mới được tạo
   DateTime _expiresIn; // Số giây mà Mà id tonken hết hạn
   String _localId; // Uid cho người dùng mới được tạo
-
+  Timer resultTimer;
   bool isAuth() {
     return token != null;
+  }
+
+  String get localId {
+    return _localId;
   }
 
   String get token {
@@ -47,11 +54,39 @@ class Auth extends ChangeNotifier {
       _expiresIn = DateTime.now().add(Duration(
           seconds: int.parse(responseData[
               "expiresIn"]))); // Thời gian hiện tại công thêm thời gian hết hạn
-      _localId = responseData["_localId"];
+      _localId = responseData["localId"];
+      autoLogout();
+      final prefer = await SharedPreferences.getInstance();
+      final userData = json.encode({
+        "idToken": _idToken,
+        "userId": localId,
+        "expiresIn": _expiresIn.toIso8601String(),
+      });
+      prefer.setString('userData', userData);
       notifyListeners();
     } catch (error) {
       throw error;
     }
+  }
+
+  Future<bool> autosignin() async {
+    final perfer = await SharedPreferences.getInstance();
+    if (!perfer.containsKey('userData')) {
+      return false;
+    }
+    final extraData =
+        json.decode(perfer.getString("userData")) as Map<String, Object>;
+    final expiresIn = DateTime.parse(extraData['expiresIn']);
+    if (expiresIn.isBefore(DateTime.now())) {
+      return false;
+    }
+    _expiresIn = expiresIn;
+    _localId = extraData['userId'];
+    _idToken = extraData['idToken'];
+    notifyListeners();
+    autoLogout();
+    print("Data  new ");
+    return true;
   }
 
   Future<void> signUp(String email, String password) {
@@ -60,6 +95,28 @@ class Auth extends ChangeNotifier {
 
   Future<void> signIn(String email, String password) {
     return _authenticate(email, password, "signInWithPassword");
+  }
+
+  Future<void> logout() async {
+    _idToken = null;
+    _expiresIn = null;
+    _localId = null;
+    if (resultTimer != null) {
+      resultTimer.cancel();
+      resultTimer = null;
+    }
+    notifyListeners();
+    final perfec = await SharedPreferences.getInstance();
+    perfec.clear();
+  }
+
+  void autoLogout() {
+    if (resultTimer != null) {
+      resultTimer.cancel();
+    }
+    final timeExp = _expiresIn.difference(DateTime.now()).inSeconds;
+    print("Time:$timeExp");
+    resultTimer = Timer(Duration(seconds: timeExp), logout);
   }
 }
 //signInWithPassword

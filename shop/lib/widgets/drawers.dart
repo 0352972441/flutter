@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/providers/auth.dart';
 import 'package:shop/screens/manage_products_screen.dart';
 import '../screens/order_screen.dart';
 
@@ -66,8 +68,10 @@ class MyDrawer extends StatelessWidget {
           Spacer(),
           Padding(
             padding: EdgeInsets.only(bottom: 20),
-            child: buildListTile(
-                Icons.account_circle, 'Information', context, () {}),
+            child: buildListTile(Icons.exit_to_app, 'Logout', context, () {
+              Navigator.pop(context);
+              Provider.of<Auth>(context, listen: false).logout();
+            }),
           )
         ],
       )),

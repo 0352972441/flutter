@@ -94,15 +94,33 @@ class AuthCard extends StatefulWidget {
   _AuthCardState createState() => _AuthCardState();
 }
 
-class _AuthCardState extends State<AuthCard> {
+class _AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
   final GlobalKey<FormState> _globalKey = GlobalKey();
   final _controlerPassword = TextEditingController();
   AuthMode _authMode = AuthMode.Login;
   final _focusPassword = FocusNode();
   bool _isLoading = false;
+  AnimationController _controller;
+  Animation<Size> _heightContainer;
   Map<String, String> user = {"email": "", "password": ""};
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 800));
+    _heightContainer = Tween(
+            begin: Size(double.infinity, 300), end: Size(double.infinity, 390))
+        .animate(
+            CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
+    // _heightContainer.addListener(() {
+    //   setState(() {});
+    // });
+  }
+
   @override
   void dispose() {
+    _controller.dispose();
     _controlerPassword.dispose();
     super.dispose();
   }
@@ -177,10 +195,12 @@ class _AuthCardState extends State<AuthCard> {
       setState(() {
         _authMode = AuthMode.Signup;
       });
+      _controller.forward();
     } else {
       setState(() {
         _authMode = AuthMode.Login;
       });
+      _controller.reverse();
     }
   }
 
@@ -190,12 +210,19 @@ class _AuthCardState extends State<AuthCard> {
 
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Container(
-        height: _authMode == AuthMode.Signup ? 390 : 300,
-        width: deviceSize.width * 0.75,
-        constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 390 : 300),
-        padding: EdgeInsets.all(16),
+      child: AnimatedBuilder(
+        animation: _heightContainer,
+        builder: (context, ch) => Container(
+          //height: _authMode == AuthMode.Signup ? 390 : 300,
+          height: _heightContainer.value.height,
+          width: deviceSize.width * 0.75,
+          constraints: BoxConstraints(
+            minHeight: _heightContainer
+                .value.height, /*_authMode == AuthMode.Signup ? 390 : 300*/
+          ),
+          padding: EdgeInsets.all(16),
+          child: ch,
+        ),
         child: Form(
           key: _globalKey,
           child: SingleChildScrollView(
