@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop/helpers/customtransaction.dart';
 import 'package:shop/providers/products.dart';
 import 'package:shop/screens/auth_screen.dart';
 import 'package:shop/screens/cart_screen.dart';
@@ -49,16 +50,19 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Shop',
             theme: ThemeData(
-              primarySwatch: Colors.purple,
-              accentColor: Colors.deepOrange,
-              fontFamily: 'Lato',
-              textTheme: ThemeData.light().textTheme.copyWith(
-                  title: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      fontFamily: 'Anton',
-                      color: Colors.white)),
-            ),
+                primarySwatch: Colors.purple,
+                accentColor: Colors.deepOrange,
+                fontFamily: 'Lato',
+                textTheme: ThemeData.light().textTheme.copyWith(
+                    title: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        fontFamily: 'Anton',
+                        color: Colors.white)),
+                pageTransitionsTheme: PageTransitionsTheme(builders: {
+                  TargetPlatform.android: CustomTransaction(),
+                  TargetPlatform.iOS: CustomTransaction()
+                })),
             home: value.isAuth()
                 ? ProductOverviewScreen()
                 : FutureBuilder(

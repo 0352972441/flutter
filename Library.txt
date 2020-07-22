@@ -5,3 +5,15 @@ provider: ^4.1.3
   http: ^0.12.1
   flutter_dotenv: ^2.1.0
 shared_preferences: ^0.5.8
+image_picker: ^0.6.7+4 : Thao tác với image Device
+path_provider: ^1.6.11 : giúp bạn truy cập vào các đường dẫn iOS và Android cung cấp cho bạn để lưu trữ dữ liệu
+path: ^1.7.0 : Giúp xây dựng các đường dẫn
+
+
+
+
+====================
+* Cấp quyền image device trên thiết bị IOS
+- NSPhotoLibraryUsageDescription - describe why your app needs permission for the photo library. This is called Privacy - Photo Library Usage Description in the visual editor.
+- NSCameraUsageDescription - describe why your app needs access to the camera. This is called Privacy - Camera Usage Description in the visual editor.
+- NSMicrophoneUsageDescription - describe why your app needs access to the microphone, if you intend to record videos. This is called Privacy - Microphone Usage Description in the visual editor.

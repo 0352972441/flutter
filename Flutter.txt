@@ -40,3 +40,58 @@ III> Work with animatedContainer
 IV> Fading loading image
 
 - FadeInImage(placeHorder: image, image: image(image))
+
+V> CustomScrollView
+
+CustomScrollView(
+	Sliver:<Widget>[
+		vd: SliverAppbar();
+		SliverList(
+			delegate:SilverChildListDelegate
+		)
+	]
+)
+
+- FlexibleSpaceBar(
+	backgound: phần hiển thị để vuốt ẩn
+	title: tên toolbar
+)
+
+
+VI> Custom Route Transition
+
+- class extends PageTransactionBuilder
+(
+	@overide 
+	BuilderTransaction()
+)
+- App dụng toàn theme
+or
+class Name<T> extends MaterialPageRoute<T>
+	CustomRoute({
+		WidgetBuilder builder,
+		RouteSettings settings,
+  }) : super(
+          builder: builder,
+          settings: settings,
+        );
+- App dụng cho một: (MaterialPageRoute)
+
+================================================================================
+
+
+*USE NATIVE DEVICE FEATURE
+- File image;
+* image.file (): Lấy ảnh thiết bị 
+
+* xxxButton.icon(Nút vừa có icon và label);
+
+**: Sử dụng image picker & Device camera
+- ImagePicker.pickerImage/IamgePicker().getImage(Sourece: ImageSoucrce.camera/gerally ,...)
+
+** Lưu trữ image
+path_provider as asyPath
+ sysPath.getApplicationDucumentDirection: Mục tài liệu ưng dung (Cái này dành riêng cho ứng dụng)
+ sysPath.getApplicationSupportDirection:
+ sysPath.getExternalStorageDirection: quyền truy cập vào thẻ SD bên ngoài 
+ sysPath.getTemporatyDirection: Thư mục tạm thời và thường duyên thu dọn bởi bởi hệ thống
