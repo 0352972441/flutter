@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.green,
           primarySwatch: Colors.blue,
         ),
-        home: ChangeNotifierProvider.value(
-            value: GreatPlaces(), child: PlacesListScreen()),
+        home: ChangeNotifierProvider(
+            create: (context) => GreatPlaces(), child: PlacesListScreen()),
         routes: {
           AddPlacesScreen.routeName: (context) => AddPlacesScreen(),
         });
