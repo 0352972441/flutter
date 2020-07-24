@@ -95,3 +95,41 @@ path_provider as asyPath
  sysPath.getApplicationSupportDirection:
  sysPath.getExternalStorageDirection: quyền truy cập vào thẻ SD bên ngoài 
  sysPath.getTemporatyDirection: Thư mục tạm thời và thường duyên thu dọn bởi bởi hệ thống
+
+
+* USE SQLite 
+Bước 1: sql.getDatapath(): Lấy đường dẫn database để mà tạo đạo database ở đường dẫn đó
+Bước 2: sql.openDatabase(path, oncreate:(db, versiont): tạo database ): Mở database tìm mở database tồn tại hoặc tạo một cái mới(path.join(): nối đường đãn ) Bây giờ có thể đọc và viết;
+Bước 3: dùng kết quả Bước 2 để thêm dữ liệu 
+- conflicArgorithm.replace : insert data và mà id đã có databasse nó sẽ overide lại
+
+=======================================
+Location: thư viện location
++ Location().getLocation(): Lấy vị trí hiện tại
+
+
+
+
+
+
+
+
+
+
+
+=================================================== CHAT APP =======================================================
+
+I> FireBase là gì?
+Firebase là một nền tảng để phát triển ứng dụng di động và trang web, bao gồm các API đơn giản và mạnh mẽ mà không cần backend hay server
+Firebase là dịch vụ cơ sở dữ liệu hoạt động trên nền tảng đám mây – cloud. Kèm theo đó là hệ thống máy chủ cực kỳ mạnh mẽ của Google. Chức năng chính là giúp người dùng lập trình ứng dụng bằng cách đơn giản hóa các thao tác với cơ sở dữ liệu. Cụ thể là những giao diện lập trình ứng dụng API đơn giản. Mục đích nhằm tăng số lượng người dùng và thu lại nhiều lợi nhuận hơn.
+
+Đặc biệt, còn là dịch vụ đa năng và bảo mật cực tốt. Firebase hỗ trợ cả hai nền tảng Android và IOS. Không có gì khó hiểu khi nhiều lập trình viên chọn Firebase làm nền tảng đầu tiên để xây dựng ứng dụng cho hàng triệu người dùng trên toàn thế giới
+
+
+II> Bắt đầu Với thiết lập với firebase
+bước 1: Tạo project
+Bước 2 : thêm firebase vào ứng dụng android and IOS
+Bước 3: Tạo Cloud database và thêm thư viện firestore
+
+
+

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "888601212261",
+    "firebase_url": "https://balloonschat.firebaseio.com",
+    "project_id": "balloonschat",
+    "storage_bucket": "balloonschat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888601212261:android:cf6e7e26c91912c2869d8c",
+        "android_client_info": {
+          "package_name": "com.example.balloonschat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888601212261-3b123g24dk9p9muit68cvh0r8p8rasbr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADkltSan58YQ3aAYmjEg6wxASkmAHhKgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888601212261-3b123g24dk9p9muit68cvh0r8p8rasbr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -22,6 +22,9 @@ class _ImageInputState extends State<ImageInput> {
     setState(() {
       _image = _imagePicker; //File(_imagePicker.path);
     });
+    if (_imagePicker == null) {
+      return;
+    }
     final paths = await sysPath.getApplicationDocumentsDirectory();
     final fileName = path.basename(_imagePicker.path);
     final saveImage = await _imagePicker.copy('${paths.path}/$fileName');
