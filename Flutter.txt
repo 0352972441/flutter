@@ -126,10 +126,65 @@ Firebase là dịch vụ cơ sở dữ liệu hoạt động trên nền tảng 
 Đặc biệt, còn là dịch vụ đa năng và bảo mật cực tốt. Firebase hỗ trợ cả hai nền tảng Android và IOS. Không có gì khó hiểu khi nhiều lập trình viên chọn Firebase làm nền tảng đầu tiên để xây dựng ứng dụng cho hàng triệu người dùng trên toàn thế giới
 
 
+
 II> Bắt đầu Với thiết lập với firebase
 bước 1: Tạo project
 Bước 2 : thêm firebase vào ứng dụng android and IOS
 Bước 3: Tạo Cloud database và thêm thư viện firestore
+
+III>
+ 1. Thêm data vào firebase 
+ + FireStore.instance.collection(path).add({- map- })
+ 
+ IV> xác thực 
+
+
+## Các widget
+- StreamBuild(stream , builder()))
++ builder: có thể chuyển đổi các thành phần của luồng thành widget
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+========================================================================= REST API ===========================================================================
+
+API: Một API là một giao diện lập trình ứng dụng. Đó là một bộ quy tắc cho phép các chương trình nói chuyện với nhau. Nhà phát triển tạo API trên máy chủ và cho phép khách hàng nói chuyện với nó.
+REST : Xác định API trông như thế nào . VIết tắt của "Representational State Transfer" Xác định một số quy tắt nhà nhà phát triển phải tuân theo khi tạo API của họ.
++ mỗi URL được gọi là một "yêu cầu - request" còn dữ liệu trả lợi là "phản hồi - reponse "
+JSON: (Javascrip Object Notation): một đinh dạnh phổ biến để gửi dữ liệu thông qua REST API
+
 
 
 

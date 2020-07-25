@@ -5,24 +5,36 @@ class BalloonsChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return Container(
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Center(
-              child: Text("do something ..."),
-            ),
+      body: StreamBuilder(
+        stream: Firestore.instance
+            .collection("chats/DOfbgW3z1Oa8soAh8BgU/messager")
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          final documents = snapshot.data.documents;
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                child: Center(
+                  child: Text(documents[index]['user']),
+                ),
+              );
+            },
+            itemCount: documents.length,
           );
         },
-        itemCount: 20,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Firestore.instance
-              .collection('chats/AIU4zarTxXhPG9LBvVq6/name')
-              .snapshots()
-              .listen((event) {
-            print(event);
+              .collection("chats/DOfbgW3z1Oa8soAh8BgU/messager")
+              .add({
+            "user": "What your name?",
           });
         },
         child: Icon(Icons.beach_access),
@@ -30,3 +42,23 @@ class BalloonsChatScreen extends StatelessWidget {
     );
   }
 }
+
+/**
+ * // Firestore.instance
+          //     .collection('chats')
+          //     .getDocuments()
+          //     .then((value) => {
+          //           value.documents.forEach((element) {
+          //             print('Value: ${element.data['name']}');
+          //           })
+          //         });
+          Firestore.instance
+              .collection('/chats/DOfbgW3z1Oa8soAh8BgU/messager')
+              .snapshots()
+              .listen((event) {
+            event.documents.forEach((element) {
+              print('Value: ${element['user']}');
+            });
+          });
+        },
+ */
