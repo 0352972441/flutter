@@ -1,4 +1,5 @@
 import 'package:balloonschat/screens/auth_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './screens/balloonschatscreen.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,14 @@ class MyApp extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20))),
         ),
-        home: AuthScreen());
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.onAuthStateChanged,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return BalloonsChatScreen();
+            }
+            return AuthScreen();
+          },
+        ));
   }
 }

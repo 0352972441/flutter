@@ -136,8 +136,26 @@ III>
  1. Thêm data vào firebase 
  + FireStore.instance.collection(path).add({- map- })
  
- IV> xác thực 
+ IV> xác thực (Sử dụng thư viện có săn IPA firebase_auth)
+ bước 1 : thêm thư viện và import
+ bước 2 : khởi tạo FirebaseAuth.instane
+ bước 3 : sử dung biến khởi tại sử dụng các phương thức
+ - FireStore.instance.onAuthStateChange() => Stream<>
+ V> Up dư liệu lên firebase
+ bươc 1: Firestore.instance.collection('name').document('documentId').setData({}): post data lên firebase collection và document nếu không tồn tại sẽ tượng động tạo
 
+VI> Security rule
+- Chặn quyền truy cập vào collection
+ macth/NameCollection {
+	allow read, create(Cho phéo tạo không được cạp nhật và xóa), write : if request.auth != null (Điều kiện cho phép truy cập)
+ }
+ - Truy cập dữ liệu riêng:
+	match/nameCollection/{uid(idDocument)}{
+		allow write : if request.auth != null && request.auth.uid = uid (idDocument)
+	}
+	
+- Matches any document in the 'cities' collection or subcollections.
+	match/nameCollection/{document= **} : mấy thằng con của NameCollection đêu hợp lệ
 
 ## Các widget
 - StreamBuild(stream , builder()))

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -5,6 +6,32 @@ class BalloonsChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Balloons"),
+        actions: <Widget>[
+          DropdownButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.green,
+            ),
+            items: [
+              DropdownMenuItem(
+                value: 'logout',
+                child: FlatButton.icon(
+                    onPressed: () {},
+                    icon: Icon(Icons.exit_to_app),
+                    label: Text("Logout")),
+              )
+            ],
+            onChanged: (value) {
+              if (value == "logout") {
+                print("logout");
+                FirebaseAuth.instance.signOut();
+              }
+            },
+          ),
+        ],
+      ),
       body: StreamBuilder(
         stream: Firestore.instance
             .collection("chats/DOfbgW3z1Oa8soAh8BgU/messager")
