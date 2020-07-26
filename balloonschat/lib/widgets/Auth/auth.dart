@@ -27,6 +27,7 @@ class _AuthState extends State<Auth> {
     print(user['email']);
     print(user['userName']);
     print(user['password']);
+    FocusScope.of(context).unfocus();
     widget._sumitRegister(
         user['email'], user['userName'], user['password'], _isLogin, context);
   }

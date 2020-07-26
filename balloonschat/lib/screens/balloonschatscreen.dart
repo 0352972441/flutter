@@ -1,3 +1,5 @@
+import 'package:balloonschat/Chats/messages.dart';
+import 'package:balloonschat/Chats/newmessages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,12 +18,10 @@ class BalloonsChatScreen extends StatelessWidget {
             ),
             items: [
               DropdownMenuItem(
-                value: 'logout',
-                child: FlatButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.exit_to_app),
-                    label: Text("Logout")),
-              )
+                  value: 'logout',
+                  child: Container(
+                    child: Icon(Icons.exit_to_app),
+                  ))
             ],
             onChanged: (value) {
               if (value == "logout") {
@@ -32,40 +32,20 @@ class BalloonsChatScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: StreamBuilder(
-        stream: Firestore.instance
-            .collection("chats/DOfbgW3z1Oa8soAh8BgU/messager")
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          final documents = snapshot.data.documents;
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                child: Center(
-                  child: Text(documents[index]['user']),
-                ),
-              );
-            },
-            itemCount: documents.length,
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Firestore.instance
-              .collection("chats/DOfbgW3z1Oa8soAh8BgU/messager")
-              .add({
-            "user": "What your name?",
-          });
-        },
-        child: Icon(Icons.beach_access),
-      ),
+      body: Container(
+          child: Column(
+        children: <Widget>[Expanded(child: Messages()), NewMessages()],
+      )),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Firestore.instance
+      //         .collection("chats/DOfbgW3z1Oa8soAh8BgU/messager")
+      //         .add({
+      //       "user": "What your name?",
+      //     });
+      //   },
+      //   child: Icon(Icons.beach_access),
+      // ),
     );
   }
 }

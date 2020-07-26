@@ -157,6 +157,9 @@ VI> Security rule
 - Matches any document in the 'cities' collection or subcollections.
 	match/nameCollection/{document= **} : mấy thằng con của NameCollection đêu hợp lệ
 
+VII>
+- fireStore.collection().orderBy("Giá trị cần sắp xếp", descending: true (Sắp xếp giảm dần));
+
 ## Các widget
 - StreamBuild(stream , builder()))
 + builder: có thể chuyển đổi các thành phần của luồng thành widget
