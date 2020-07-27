@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NewMessages extends StatelessWidget {
@@ -35,10 +36,16 @@ class NewMessages extends StatelessWidget {
                 size: 35,
                 color: Colors.blue,
               ),
-              onPressed: () {
+              onPressed: () async {
+                final user = await FirebaseAuth.instance.currentUser();
                 Firestore.instance.collection('chat').document().setData({
                   'text': _messageControler.text,
-                  'createAt': Timestamp.now()
+                  'createAt': Timestamp.now(),
+                  'userId': user.uid,
+                  'userName': (await Firestore.instance
+                      .collection('user')
+                      .document(user.uid)
+                      .get())['userName'],
                 });
                 _messageControler.clear();
               })

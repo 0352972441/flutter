@@ -1,9 +1,11 @@
+import 'package:balloonschat/Pickers/imagePicker.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 class Auth extends StatefulWidget {
   Auth(this._sumitRegister, this._isLoading);
   final void Function(String email, String userName, String password,
-      bool isLogin, BuildContext context) _sumitRegister;
+      bool isLogin, BuildContext context, File _image) _sumitRegister;
   final bool _isLoading;
   @override
   _AuthState createState() => _AuthState();
@@ -17,19 +19,31 @@ class _AuthState extends State<Auth> {
     'userName': "",
     'password': ""
   };
+  File _image;
+  // Cải tiến
+  void _imagePicker(File image) {
+    _image = image;
+  }
+  // Cải tiến
 
   void _submitSaveForm() {
     final isValid = _globalKey.currentState.validate();
+    // Cải tiến
+    if (_image == null && !_isLogin) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text("Please, choose a picture"),
+        backgroundColor: Theme.of(context).errorColor,
+      ));
+      return;
+    }
+    //
     if (!isValid) {
       return;
     }
     _globalKey.currentState.save();
-    print(user['email']);
-    print(user['userName']);
-    print(user['password']);
     FocusScope.of(context).unfocus();
-    widget._sumitRegister(
-        user['email'], user['userName'], user['password'], _isLogin, context);
+    widget._sumitRegister(user['email'], user['userName'], user['password'],
+        _isLogin, context, _image);
   }
 
   @override
@@ -47,6 +61,7 @@ class _AuthState extends State<Auth> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        if (!_isLogin) ImagePickers(_imagePicker),
                         TextFormField(
                           key: ValueKey("email"),
                           validator: (value) {

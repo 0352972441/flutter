@@ -139,6 +139,8 @@ III>
  IV> xác thực (Sử dụng thư viện có săn IPA firebase_auth)
  bước 1 : thêm thư viện và import
  bước 2 : khởi tạo FirebaseAuth.instane
+ + FirebaseAuth.instance.currentUser(): Lấy user hiện tại
+ + final name = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password): đăng nhập -> name.user.uid: Lấy uid;
  bước 3 : sử dung biến khởi tại sử dụng các phương thức
  - FireStore.instance.onAuthStateChange() => Stream<>
  V> Up dư liệu lên firebase
@@ -160,9 +162,15 @@ VI> Security rule
 VII>
 - fireStore.collection().orderBy("Giá trị cần sắp xếp", descending: true (Sắp xếp giảm dần));
 
+
+VIII>
+- FirebaseStorage.instance.ref(): Cho phép truy cập vào kho lưu fireStorage toàn cầu của bạn
+.child("path"):Tạo ra đường dẫn thư mục 
+
 ## Các widget
 - StreamBuild(stream , builder()))
 + builder: có thể chuyển đổi các thành phần của luồng thành widget
++ _controler.clear(): Làm sạch
 
 
 
