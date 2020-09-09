@@ -5,3 +5,9 @@ Một số phương thức
 + ....document(""): Lấy documnet
 + ....orderBY("",...(Giảm or tăng)): Sắp xếp
 + ....where("",Điều kiên(Bé hơn, lớn, Bằng)): Lâys theo điều kiên
+* userResf.document("");
++ .get(): Lấy data
++ .setData(): Thêm data vào document("???")
++ .updateData(): Cập nhật
++ .delete(): Xóa
++ .get().exist(): Kiểm tra phẩn tử có tồn tại hay không
