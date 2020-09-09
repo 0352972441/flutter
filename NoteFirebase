@@ -1,0 +1,7 @@
+FirebaseStore userResf = FirebaseStore();
+Một số phương thức
++ userResf.limit(int): Lấy giới hạn bao nhiêu phần tử
++ ....collection(""): Lấy collection
++ ....document(""): Lấy documnet
++ ....orderBY("",...(Giảm or tăng)): Sắp xếp
++ ....where("",Điều kiên(Bé hơn, lớn, Bằng)): Lâys theo điều kiên
