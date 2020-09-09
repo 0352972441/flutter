@@ -10,4 +10,18 @@ Một số phương thức
 + .setData(): Thêm data vào document("???")
 + .updateData(): Cập nhật
 + .delete(): Xóa
-+ .get().exist(): Kiểm tra phẩn tử có tồn tại hay không
++ .get().exist(): Kiểm tra phẩn tử có tồn tại hay không, or get().reference(): Lấy đối tượng tham chiểu đến(Lấy giá trị)
+
+** factory User.fromdocument(DocumentSnaphot snapshot){
+  return User(
+    id(Biến instance User): snapshot['id']: Giá trị lấy trên firebase
+  )
+}
+
+
+** Xác thực bằng Google
+* GoogleSignIn  signin = GoogleSignIn():
++ signin.onCurrentSignChange(): Lắng nghe thay đổi(Trả về stream)
++ signIn.SignInSlently(): Đăng Nhập tài khoản cũ
++ signin.logout(): Đăng xuất
++ signin.currentUser(): Lấy thông tin tài khoản hiện tại
