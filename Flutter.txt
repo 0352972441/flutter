@@ -171,7 +171,8 @@ VIII>
 - StreamBuild(stream , builder()))
 + builder: có thể chuyển đổi các thành phần của luồng thành widget
 + _controler.clear(): Làm sạch
-
++ SimpleDiaglog
+ - SimpleDiaglogOption()
 
 
 
