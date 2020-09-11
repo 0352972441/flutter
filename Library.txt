@@ -13,7 +13,11 @@ location: ^3.0.2 : Location
 cloud_firestore: ^0.13.7 : Thư viện fireStore
 firebase_auth: ^0.16.1 : thư viện xác thực đăng nhập đăng ký
 firebase_storage: ^3.1.6 : Thư viện sử lý lưu trữ image, ... firebase
-google_sign_in: ^4.5.3 : Xác thực tài khoản googlefirebase
+google_sign_in: ^4.5.3 : Xác thực tài khoản googlefireba
+timeago: ^2.0.27 : Xử lý thời gian
+animator: ^2.0.1 : Xử lý animatior
+image: ^2.1.14 : Xử lý ảnh nén và giải nén
+uuid: ^2.2.2 : Tao cách uuid v4 v1 ... (duy nhất)
 
 
 
